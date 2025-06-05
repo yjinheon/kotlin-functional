@@ -10,26 +10,32 @@ import org.http4k.server.asServer
 import org.http4k.server.Jetty
 import org.http4k.core.Status.Companion.CREATED
 import org.http4k.core.Status.Companion.OK
+import org.http4k.routing.path
 
-val htmlPage = """
+
+fun main() {
+    val app: HttpHandler = routes(
+        "/todo/{user}/{list}" bind Method.GET to ::showList
+    )
+    val server = app.asServer(Jetty(8080)).start()
+}
+
+fun showList(req: Request): Response {
+    val user: String? = req.path("user")
+    val list: String? = req.path("list")
+
+    val htmlPage = """
   <html>
   <body>
+  <h1>Zettai</h1>
+  <p>Here is the list <b>$list</b> of user <b>$user</b> </p>
   <h1 style="text-align: font-size:3em;">Hello Functional World!</h1>
   </body>
   </html>
 """.trimIndent()
 
-
-val app: HttpHandler = routes(
-    "/greetings" bind Method.GET to ::greetings,
-    "/data" bind Method.POST to ::receiveData,
-)
-
-fun greetings(req: Request): Response = Response(OK).body(htmlPage)
-
-fun receiveData(req: Request): Response = Response(CREATED).body("Received data : ${req.bodyString()}")
-
-
-fun main() {
-    app.asServer(Jetty(8080)).start()
+    return Response(OK).body(htmlPage)
 }
+
+
+
