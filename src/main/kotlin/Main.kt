@@ -8,7 +8,6 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.server.asServer
 import org.http4k.server.Jetty
-import org.http4k.core.Status.Companion.CREATED
 import org.http4k.core.Status.Companion.OK
 import org.http4k.routing.path
 
@@ -18,6 +17,7 @@ fun main() {
         "/todo/{user}/{list}" bind Method.GET to ::showList
     )
     val server = app.asServer(Jetty(8080)).start()
+
 }
 
 fun showList(req: Request): Response {
