@@ -14,7 +14,8 @@ dependencies {
     implementation(platform('org.http4k:http4k-bom:6.11.1.0'))
     implementation('org.http4k:http4k-core:6.11.1.0') // mandatory
     implementation('org.http4k:http4k-server-jetty:6.11.1.0')
-    //testing
+    // testing
+    testImplementation('org.http4k:http4k-client-jetty:6.11.1.0')
     testImplementation('org.jetbrains.kotlin:kotlin-test')
     testImplementation("io.strikt:strikt-core:0.35.1")
 }
